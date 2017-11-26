@@ -21,6 +21,7 @@ for directory in datadirs:
         (rate, signal) = wav.read(curdir + "/" + f)
         ghmm.fit(mfcc(signal, rate, winfunc=numpy.hamming))
 
-    ghmms[directory] = ghmm
+    ghmms[directory] = (ghmm.n_features, ghmm.transmat_, 
+                ghmm.startprob_, ghmm.means_, ghmm.covars_)
 
 pickle.dump(ghmms, open("hmmset.p", "wb"))

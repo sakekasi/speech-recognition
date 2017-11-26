@@ -20,8 +20,22 @@ print(filepath)
 (rate, signal) = wav.read(filepath)
 features = mfcc(signal, rate, winfunc=numpy.hamming)
 
-ghmms = pickle.load(open("hmmset.p", "rb"))
+ghmmInfo = pickle.load(open("hmmset.p", "rb"))
+ghmms = {}
+for key in ghmmInfo:
+    i = ghmmInfo[key]
+    n_features = i[0]
+    transmat = i[1]
+    startprob = i[2]
+    means = i[3]
+    covars = i[4]
+    ghmms[key] = hmm.GaussianHMM(startprob_prior=startprob, 
+                                 transmat_prior=transmat,
+                                 means_prior=means,
+                                 covars_prior=covars, 
+                                 init_params='stmc')
+
 for key in ghmms:
     print("Model for " + key + ":")
-    print("Log Odds: " + ghmm[key].score(features))
+    print("Log Odds: " + ghmms[key].score_samples(features))
 
