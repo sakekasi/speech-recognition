@@ -17,7 +17,7 @@ matplotlib = "*"
 sklearn = "*"
 scipy = "*"
 python-speech-features = "*"
-
+scikit-optimize = "*"
 
 [dev-packages]
 
