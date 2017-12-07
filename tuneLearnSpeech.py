@@ -44,7 +44,7 @@ def predict(fileData):
     return logOddsToKey[max(logOddsToKey.keys())]
 
 def objective(params):
-    n_components, n_iter = params
+    n_components, n_iter, n_mix = params
 
     for directory in datadirs:
         train, test = train_test_split(wordData[directory], test_size=0.3)
@@ -63,7 +63,7 @@ def objective(params):
         lengths[directory] = runLengthsForWord
 
     for directory in datadirs:
-        ghmm = hmm.GaussianHMM(n_components=n_components,n_iter=n_iter)
+        ghmm = hmm.GMMHMM(n_components=n_components, n_iter=n_iter, n_mix=n_mix)
         ghmm.fit(flatData[directory], lengths=lengths[directory])
         ghmms[directory] = ghmm
 
@@ -81,11 +81,11 @@ def objective(params):
     return ( 1.0 - float(successful) / len(labeledTestData) )
 
 space = [
-            (1, 50), # n_components
-            (1, 25)  # n_iter
+            (1, 2), # n_components
+            (1, 2)  # n_iter
         ]
 
-res_gp = gp_minimize(objective, space, n_calls=100, random_state=0)
+res_gp = gp_minimize(objective, space, n_calls=10, random_state=0, n_jobs=-1)
 print("Best score=%.4f" % res_gp.fun)
 print("""Best parameters:
 - n_components=%d
