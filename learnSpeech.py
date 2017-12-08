@@ -78,15 +78,15 @@ def getTestData(trainTestData):
 
 # MODEL TRAINING, SCORING
 
-def scoreModels(testData):
+def scoreModels(testData, ghmms):
   successful = 0
   for test in testData:
-    prediction = predict(test[0])
+    prediction = predict(test[0], ghmms)
     if prediction == test[1]:
       successful += 1
   return ( 1.0 - float(successful) / len(testData) )
 
-def predict(fileData):
+def predict(fileData, ghmms):
     logOddsToKey = {}
     for key in ghmms:
         ghmm = ghmms[key]
