@@ -16,7 +16,10 @@ WORDDATA='worddata.p'
 # SPEECHMODELS='speechmodels.p'
 
 wordData = {}
+finalTestData = {}
+learningData = {}
 loadedWordData = False
+splittedFinalTestData = False
 
 # FILE PROCESSING
 
@@ -52,10 +55,24 @@ def deserializeWordData():
 
 # DATA PROCESSING
 
-def splitTrainingTestData(wordData):
+def splitFinalTestData(wordData):
+    global finalTestData
+    global learningData
+    global splittedFinalTestData
+    if splittedFinalTestData:
+        return learningData, finalTestData
+    else:
+        for word in wordData:
+            learnDataForWord, test = train_test_split(wordData[word], test_size=0.2)
+            finalTestData[word] = test
+            learningData[word] = learnDataForWord
+        splittedFinalTestData = True
+        return learningData, finalTestData
+
+def splitTrainingTestData(learningData):
   trainTestData = {}
-  for word in wordData:
-      train, test = train_test_split(wordData[word], test_size=0.3)
+  for word in learningData:
+      train, test = train_test_split(learningData[word], test_size=0.2)
       trainTestData[word] = {'train': train, 'test': test}
   return trainTestData
 
