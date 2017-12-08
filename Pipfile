@@ -7,17 +7,16 @@ name = "pypi"
 
 [packages]
 
-jupyter = "*"
-audiolazy = "*"
-numpy = "*"
-hmmlearn = "*"
-pyaudio = "*"
-plotly = "*"
-matplotlib = "*"
 sklearn = "*"
-scipy = "*"
-python-speech-features = "*"
 scikit-optimize = "*"
+hmmlearn = "*"
+python-speech-features = "*"
+numpy = "*"
+audiolazy = "*"
+pyaudio = "*"
+matplotlib = "*"
+jupyter = "*"
+
 
 [dev-packages]
 

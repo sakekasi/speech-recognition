@@ -62,11 +62,10 @@ def splitTrainingTestData(wordData):
 def getTrainingData(trainTestData):
   flatData = {}
   lengths = {}
-  for word in wordData:
-    flatDataForWord = numpy.concatenate(wordData[word])
-    runLengthsForWord = list(map(lambda fileData: len(fileData), wordData[word]))
-    flatData[word] = flatDataForWord
-    lengths[word] = runLengthsForWord
+  for word in trainTestData:
+    trainDataForWord = trainTestData[word]['train']
+    flatData[word] = numpy.concatenate(trainDataForWord)
+    lengths[word] = list(map(lambda fileData: len(fileData), trainDataForWord))
   return flatData, lengths
 
 def getTestData(trainTestData):
