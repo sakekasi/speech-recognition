@@ -16,6 +16,7 @@ audiolazy = "*"
 pyaudio = "*"
 matplotlib = "*"
 jupyter = "*"
+pomegranate = "*"
 
 
 [dev-packages]
